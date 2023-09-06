@@ -21,6 +21,17 @@ class Program
         var raceTask = race.StartRace();
         var statusTask = PrintRaceStatusPeriodically(race);
 
+        // Allow the user to view race status
+        Console.WriteLine("\nEnter 'status' to view race status at any time.\n");
+        while (true)
+        {
+            string userInput = Console.ReadLine();
+            if (userInput.ToLower() == "status")
+            {
+                race.PrintRaceStatus();
+            }
+        }
+
         await Task.WhenAll(raceTask, statusTask);
 
         Console.ReadLine(); // Allow the user to view race results

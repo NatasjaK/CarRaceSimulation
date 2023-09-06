@@ -23,7 +23,12 @@ namespace CarRaceSimulation
             cars.Add(car);
         }
 
-        // Method to simulate events for a car
+        // Method to advance the car's position based on its speed
+        private void AdvanceCarPosition(Car car)
+        {
+            car.Position += car.Speed * 0.5; // Adjust as needed
+        }
+
         public async Task SimulateEvents(Car car)
         {
             Random random = new Random();
@@ -33,15 +38,23 @@ namespace CarRaceSimulation
                 double randomEventProbability = random.NextDouble();
                 foreach (var (eventName, eventProbability, eventEffect) in car.Events)
                 {
-                    if (randomEventProbability < eventProbability) // Compare with eventProbability
+                    if (randomEventProbability < eventProbability)
                     {
                         car.Speed -= eventEffect;
                         Console.WriteLine($"{car.Name} has a {eventName} and its speed is reduced to {car.Speed} km/h.");
+                        AdvanceCarPosition(car);
+
+                        if (car.Position >= distance)
+                        {
+                            Console.WriteLine($"{car.Name} has reached the finish line at {distance} km!");
+                            return; // The car has won, exit the method
+                        }
                         break; // Only one event can happen at a time
                     }
                 }
             }
         }
+
 
         // Method to start the race
         public async Task StartRace()
