@@ -1,57 +1,65 @@
-﻿namespace CarRaceSimulation;
+﻿using System;
+using System.Threading;
 
-class Program
+namespace CarRaceSimulation
 {
-    static void Main(string[] args)
+    class Program
     {
-        Console.WriteLine("Welcome to the Car Race!");
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Welcome to the Car Race!");
 
-        // Create two car objects
-        Car car1 = new Car("Car 1", 120);
-        Car car2 = new Car("Car 2", 120);
+            // Create three car objects
+            Car Volvo = new Car("Volvo", 120);
+            Car Tesla = new Car("Tesla", 120);
+            Car Ford = new Car("Ford", 120);
 
-        // Create threads for each car
-        Thread thread1 = new Thread(() => Race(car1));
-        Thread thread2 = new Thread(() => Race(car2));
+            // Create threads for each car
+            Thread volvoThread = new Thread(() => Race(Volvo));
+            Thread teslaThread = new Thread(() => Race(Tesla));
+            Thread fordThread = new Thread(() => Race(Ford));
 
-        // Start the race
-        thread1.Start();
-        thread2.Start();
+
+            // Start the race for each car
+            volvoThread.Start();
+            teslaThread.Start();
+            fordThread.Start();
+
+            Console.WriteLine("Race is over!");
+        }
 
         static void Race(Car car)
         {
-            while (car.Position < 10) // Sträckan att tävla på (10 km)
+            while (car.Position < 10) // The race distance (10 km)
             {
-                int randomEvent = new Random().Next(1, 51); // Slumpa en siffra mellan 1 och 50
+                int randomEvent = new Random().Next(1, 51); // Generate a random number between 1 and 50
 
-                if (randomEvent == 1) // 1/50 chans för slut på bensin
+                if (randomEvent == 1) // 1 in 50 chance of running out of fuel
                 {
                     Console.WriteLine($"{car.Name} ran out of fuel and needs to refuel. Stopping for 30 seconds.");
-                    Thread.Sleep(30000); // Stoppa i 30 sekunder
+                    Thread.Sleep(30000); // Pause for 30 seconds
                 }
-                else if (randomEvent <= 3) // 2/50 chans för punktering
+                else if (randomEvent <= 3) // 2 in 50 chance of a flat tire
                 {
                     Console.WriteLine($"{car.Name} got a flat tire and needs to change it. Stopping for 20 seconds.");
-                    Thread.Sleep(20000); // Stoppa i 20 sekunder
+                    Thread.Sleep(20000); // Pause for 20 seconds
                 }
-                else if (randomEvent <= 8) // 5/50 chans för fågel på vindrutan
+                else if (randomEvent <= 8) // 5 in 50 chance of a bird on the windshield
                 {
                     Console.WriteLine($"{car.Name} has a bird on the windshield and needs to clean it. Stopping for 10 seconds.");
-                    Thread.Sleep(10000); // Stoppa i 10 sekunder
+                    Thread.Sleep(10000); // Pause for 10 seconds
                 }
-                else if (randomEvent <= 18) // 10/50 chans för motorfel
+                else if (randomEvent <= 18) // 10 in 50 chance of engine trouble
                 {
                     Console.WriteLine($"{car.Name} has an engine problem. Speed reduced by 1 km/h.");
-                    car.Speed -= 1; // Minska hastigheten med 1 km/h
+                    car.Speed -= 1; // Reduce speed by 1 km/h
                 }
 
-                car.Position += car.Speed; // Flytta bilen framåt
-                Thread.Sleep(1000); // Vänta 1 sekund för att simulera ett steg framåt
+                car.Position += car.Speed; // Move the car forward
+                Thread.Sleep(1000); // Wait for 1 second to simulate one step forward
             }
 
             Console.WriteLine($"{car.Name} finished the race!");
         }
-
-        Console.WriteLine("Race is over!");
     }
 }
