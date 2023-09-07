@@ -1,4 +1,4 @@
-﻿# Car Race Simulation
+# Car Race Simulation
 
 Welcome to the Car Race Simulation, a console-based game where you can experience the thrill of a car race. In this simulation, you can race different car models and track their progress in real-time. Made with C#. 
 
@@ -29,3 +29,4 @@ The project is structured as follows:
 This project is licensed under the MIT License. Feel free to use and modify the code for your purposes.
 
 Enjoy the Car Race Simulation, and may the best car win! 🏁🚗💨
+
